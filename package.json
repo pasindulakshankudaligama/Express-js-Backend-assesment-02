@@ -1,0 +1,14 @@
+{
+  "name": "expressjs-backend-assesment-02",
+  "version": "1.0.0",
+  "description": "back-end-express-with-mysql",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "pasindulakshankudaligama",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}
