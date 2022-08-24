@@ -3,6 +3,8 @@ const router = express.Router();
 const db =require("../configs/db.config");
 
 const mysql =require("mysql");
+const req = require("express/lib/request");
+const res = require("express/lib/response");
 const connection = mysql.createConnection(db.database);
 
 connection.connect(function(err){
@@ -26,6 +28,15 @@ router.get("/",(req,res)=>{
         if(err) throw err;
         res.send(rows);
     });
+});
+
+router.post("/",(req,res)=>{
+    const id = req.body.id;
+    const name = req.body.name;
+    const qty = req.body.qty;
+    const price = req.body.price;
+
+    const query = ""
 });
 
 module.exports = router;
