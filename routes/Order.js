@@ -21,6 +21,14 @@ connection.connect(function (err) {
   }
 });
 
+router.get("/", (req, res) => {
+  const query = "SELECT * FROM orders";
+  connection.query(query, (err, rows) => {
+    if (err) throw err;
+    res.send(rows);
+  });
+});
+
 
 
 module.exports = router;
