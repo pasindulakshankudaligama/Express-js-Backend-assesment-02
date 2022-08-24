@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const db = require("../configs/db.configs");
+const db = require("../configs/db.config");
 
 const mysql = require("mysql");
 const connection = mysql.createConnection(db.database);
@@ -45,6 +45,39 @@ router.get("/", (req, res) => {
       }
     });
   });
+
+  router.put("/", (req, res) => {
+    const id = req.body.id;
+    const name = req.body.name;
+    const address = req.body.address;
+  
+    const query = "UPDATE customer SET name=?, address=? WHERE id=?";
+  
+    connection.query(query, [name, address, id], (err, rows) => {
+      if (err) throw err;
+  
+      if (rows.affectedRows > 0 ) {
+          res.send({'message':'user updated'})
+      }else{
+          res.send({'message':'user not found'})
+      }
+  
+    });
+  });
+
+  router.delete('/:id',(req,res)=>{
+    const id = req.params.id;
+    const query = "DELETE FROM customer WHERE id=?";
+    
+    connection.query(query,[id],(err,rows)=>{
+        if (err) throw err;
+        if (rows.affectedRows>0) {
+            res.send({'message':'Customer Deleted'})
+        }else{
+            res.send({'message':'Customer Not Found'})
+        }
+    })
+})
 
 
 module.exports = router;
