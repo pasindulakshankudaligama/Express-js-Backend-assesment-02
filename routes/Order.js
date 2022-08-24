@@ -29,6 +29,54 @@ router.get("/", (req, res) => {
   });
 });
 
+router.post("/", (req, res) => {
+  const id = req.body.id;
+  const date = req.body.date;
+  const customer_id = req.body.customer_id;
+
+  const query = "INSERT INTO orders VALUES (?,?,?)";
+
+  connection.query(query, [id, date, customer_id], (err) => {
+    if (err) {
+      res.send({ message: "Duplicate entry" });
+    } else {
+      res.send({ message: "Order created!" });
+    }
+  });
+});
+
+router.put("/", (req, res) => {
+  const id = req.body.id;
+  const date = req.body.date;
+  const customer_id = req.body.customer_id;
+
+  const query = "UPDATE orders SET date=?, customer_id=? WHERE id=?";
+
+  connection.query(query, [date, customer_id, id], (err, rows) => {
+    if (err) throw err;
+
+    if (rows.affectedRows > 0) {
+      res.send({ message: "Order updated" });
+    } else {
+      res.send({ message: "Order not found" });
+    }
+  });
+});
+
+router.delete("/:id", (req, res) => {
+  const id = req.params.id;
+  const query = "DELETE FROM orders WHERE id=?";
+
+  connection.query(query, [id], (err, rows) => {
+    if (err) throw err;
+    if (rows.affectedRows > 0) {
+      res.send({ message: "Order Deleted" });
+    } else {
+      res.send({ message: "Order Not Found" });
+    }
+  });
+});
+
 
 
 module.exports = router;
